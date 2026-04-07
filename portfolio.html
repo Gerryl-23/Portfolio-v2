@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MOUKALA MAKOUETY — Ingénieur en devenir</title>
+  <meta name="description" content="Portfolio de Giovanie, étudiant ingénieur passionné par l'automatisation, la robotique et la logistique industrielle." />
+  <link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&f[]=boska@400,500,700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+      --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+      --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+      --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+      --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+      --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
+      --text-3xl:  clamp(2.5rem,   1rem    + 4vw,    5rem);
+      --text-hero: clamp(3.5rem,   1rem    + 8vw,    10rem);
+
+      --space-1:  0.25rem; --space-2:  0.5rem;  --space-3:  0.75rem;
+      --space-4:  1rem;    --space-5:  1.25rem; --space-6:  1.5rem;
+      --space-8:  2rem;    --space-10: 2.5rem;  --space-12: 3rem;
+      --space-16: 4rem;    --space-20: 5rem;    --space-24: 6rem;
+
+      --radius-sm:   0.375rem; --radius-md: 0.5rem;
+      --radius-lg:   0.75rem;  --radius-xl: 1rem;
+      --radius-full: 9999px;
+      --transition:  220ms cubic-bezier(0.16, 1, 0.3, 1);
+      --content-default: 1100px;
+      --font-display: 'Instrument Serif', Georgia, serif;
+      --font-body:    'Satoshi', 'Inter', sans-serif;
+    }
+    [data-theme="dark"] {
+      --color-bg:              #0c0c0b;
+      --color-surface:         #111110;
+      --color-surface-2:       #161614;
+      --color-border:          #252422;
+      --color-divider:         #1e1d1b;
+      --color-text:            #e8e6e2;
+      --color-text-muted:      #7a7874;
+      --color-text-faint:      #3d3c3a;
+      --color-text-inverse:    #0c0c0b;
+      --color-primary:         #c9b97a;
+      --color-primary-hover:   #e8d48e;
+      --color-primary-highlight: #2a2617;
+      --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.35);
+      --shadow-md: 0 4px 16px oklch(0 0 0 / 0.45);
+      --shadow-lg: 0 16px 48px oklch(0 0 0 / 0.55);
+    }
+    [data-theme="light"] {
+      --color-bg:              #f5f4f0;
+      --color-surface:         #f9f8f5;
+      --color-surface-2:       #ffffff;
+      --color-border:          #dbd9d4;
+      --color-divider:         #e4e2dd;
+      --color-text:            #1a1916;
+      --color-text-muted:      #706e6a;
+      --color-text-faint:      #b5b3ae;
+      --color-text-inverse:    #f9f8f5;
+      --color-primary:         #8a6f1a;
+      --color-primary-hover:   #6a5212;
+      --color-primary-highlight: #f0e9cf;
+      --shadow-sm: 0 1px 2px oklch(0.2 0.01 80 / 0.06);
+      --shadow-md: 0 4px 12px oklch(0.2 0.01 80 / 0.09);
+      --shadow-lg: 0 12px 32px oklch(0.2 0.01 80 / 0.13);
+    }
+
+    /* ============================================================
+       BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    body {
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      color: var(--color-text);
+      background: var(--color-bg);
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+    ul { list-style: none; }
+    h1, h2, h3, h4 { text-wrap: balance; line-height: 1.1; }
+    p { text-wrap: pretty; }
+    ::selection { background: oklch(from var(--color-primary) l c h / 0.2); }
+    :focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-sm); }
+    a, button { transition: color var(--transition), background var(--transition), border-color var(--transition), opacity var(--transition); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* ============================================================
+       LAYOUT
+    ============================================================ */
+    .container { max-width: var(--content-default); margin-inline: auto; padding-inline: clamp(var(--space-6), 4vw, var(--space-12)); }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100; padding-block: var(--space-5);
+      transition: background var(--transition), backdrop-filter var(--transition);
+    }
+    .nav.scrolled {
+      background: oklch(from var(--color-bg) l c h / 0.88);
+      backdrop-filter: blur(12px);
+    }
+    .nav__inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav__logo {
+      display: flex; align-items: center; gap: var(--space-3);
+      font-size: var(--text-sm); font-weight: 500; opacity: 0.9;
+    }
+    .nav__logo:hover { opacity: 1; }
+    .nav__links { display: flex; align-items: center; gap: var(--space-8); }
+    .nav__link {
+      font-size: var(--text-sm); color: var(--color-text-muted);
+      letter-spacing: 0.01em; position: relative;
+    }
+    .nav__link::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 1px; background: var(--color-primary);
+      transition: width var(--transition);
+    }
+    .nav__link:hover { color: var(--color-text); }
+    .nav__link:hover::after { width: 100%; }
+    .nav__actions { display: flex; align-items: center; gap: var(--space-4); }
+    .theme-toggle {
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      border-radius: var(--radius-full); color: var(--color-text-muted);
+      border: 1px solid var(--color-border);
+    }
+    .theme-toggle:hover { color: var(--color-text); border-color: var(--color-text-muted); }
+
+    /* ============================================================
+       CURSOR
+    ============================================================ */
+    @media (pointer: fine) {
+      .cursor-dot, .cursor-ring {
+        position: fixed; pointer-events: none; z-index: 9999;
+        border-radius: 50%; transform: translate(-50%, -50%);
+      }
+      .cursor-dot { width: 5px; height: 5px; background: var(--color-primary); top:0; left:0; }
+      .cursor-ring {
+        width: 32px; height: 32px;
+        border: 1.5px solid oklch(from var(--color-primary) l c h / 0.4);
+        top:0; left:0;
+        transition: width 300ms ease, height 300ms ease, border-color 300ms ease;
+      }
+    }
+
+    /* ============================================================
+       VIEW SYSTEM  — main vs project page
+    ============================================================ */
+    #view-main    { display: block; }
+    #view-project { display: none; }
+
+    /* Project page enters from right */
+    #view-project.entering {
+      animation: slideInRight 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    #view-main.exiting {
+      animation: fadeOutLeft 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+    }
+    #view-main.entering {
+      animation: slideInLeft 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    #view-project.exiting {
+      animation: fadeOutRight 0.3s cubic-bezier(0.4, 0, 1, 1) forwards;
+    }
+
+    @keyframes slideInRight  { from { opacity:0; transform:translateX(60px); } to { opacity:1; transform:translateX(0); } }
+    @keyframes fadeOutLeft   { from { opacity:1; transform:translateX(0); } to { opacity:0; transform:translateX(-40px); } }
+    @keyframes slideInLeft   { from { opacity:0; transform:translateX(-60px); } to { opacity:1; transform:translateX(0); } }
+    @keyframes fadeOutRight  { from { opacity:1; transform:translateX(0); } to { opacity:0; transform:translateX(40px); } }
+
+    /* ============================================================
+       HERO
+    ============================================================ */
+    .hero {
+      min-height: 100dvh; display: flex; flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: clamp(var(--space-12), 8vw, var(--space-24));
+      padding-top: var(--space-24); position: relative; overflow: hidden;
+    }
+    .hero__bg-text {
+      position: absolute; top: 50%; left: 0; right: 0;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: clamp(8rem, 18vw, 22rem); font-weight: 400;
+      color: oklch(from var(--color-text) l c h / 0.025);
+      white-space: nowrap; user-select: none; pointer-events: none; line-height: 1; overflow: hidden;
+    }
+    .hero__greeting {
+      font-size: var(--text-sm); font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--color-primary); margin-bottom: var(--space-6);
+      display: flex; align-items: center; gap: var(--space-3);
+      opacity: 0;
+    }
+    .hero__greeting::before { content: ''; display: block; width: 32px; height: 1px; background: var(--color-primary); }
+    .hero__name {
+      font-family: var(--font-display); font-size: var(--text-hero);
+      font-weight: 400; line-height: 0.95; letter-spacing: -0.02em;
+      margin-bottom: var(--space-8); opacity: 0;
+    }
+    .hero__name em { font-style: italic; color: var(--color-primary); }
+    .hero__bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-8); flex-wrap: wrap; }
+    .hero__description {
+      max-width: 44ch; font-size: var(--text-lg); font-weight: 300;
+      line-height: 1.55; color: var(--color-text-muted); opacity: 0;
+    }
+    .hero__description strong { color: var(--color-text); font-weight: 500; }
+    .hero__scroll {
+      font-size: var(--text-xs); letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--color-text-faint); writing-mode: vertical-rl;
+      transform: rotate(180deg); user-select: none; opacity: 0;
+    }
+    .hero__scroll::before {
+      content: ''; display: block; width: 1px; height: 48px;
+      background: linear-gradient(to bottom, transparent, var(--color-text-faint));
+    }
+
+    /* ============================================================
+       ABOUT / SECTIONS
+    ============================================================ */
+    .about-strip {
+      padding-block: clamp(var(--space-16), 8vw, var(--space-24));
+      border-top: 1px solid var(--color-divider); border-bottom: 1px solid var(--color-divider);
+    }
+    .about-strip__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(var(--space-10), 6vw, var(--space-20)); align-items: start; }
+    .about-strip__label { font-size: var(--text-xs); font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-primary); margin-bottom: var(--space-5); }
+    .about-strip__title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 400; line-height: 1.15; letter-spacing: -0.01em; }
+    .about-strip__title em { font-style: italic; }
+    .about-strip__body { font-size: var(--text-base); line-height: 1.72; color: var(--color-text-muted); }
+    .about-strip__body + .about-strip__body { margin-top: var(--space-4); }
+    .about-strip__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-6); }
+    .tag {
+      font-size: var(--text-xs); font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: var(--space-2) var(--space-4);
+      border: 1px solid var(--color-border); border-radius: var(--radius-full);
+      color: var(--color-text-muted);
+    }
+    .tag:hover { color: var(--color-primary); border-color: var(--color-primary); }
+
+    /* ============================================================
+       PROJECTS LIST
+    ============================================================ */
+    .projects { padding-block: clamp(var(--space-16), 8vw, var(--space-24)); }
+    .section-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: clamp(var(--space-10), 6vw, var(--space-16));
+      border-bottom: 1px solid var(--color-divider); padding-bottom: var(--space-5);
+    }
+    .section-title { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 400; letter-spacing: -0.01em; }
+    .section-count { font-size: var(--text-xs); color: var(--color-text-faint); letter-spacing: 0.1em; font-weight: 500; }
+    .projects__list { display: flex; flex-direction: column; }
+
+    .project-item {
+      display: grid; grid-template-columns: 4ch 1fr auto;
+      align-items: center; gap: var(--space-8);
+      padding-block: clamp(var(--space-6), 3vw, var(--space-10));
+      border-bottom: 1px solid var(--color-divider);
+      cursor: pointer; position: relative; overflow: hidden;
+      text-decoration: none;
+    }
+    .project-item::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--color-surface);
+      transform: translateX(-100%);
+      transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1); z-index: 0;
+    }
+    .project-item:hover::before { transform: translateX(0); }
+    .project-item > * { position: relative; z-index: 1; }
+    .project-item__num { font-size: var(--text-xs); font-weight: 500; color: var(--color-text-faint); letter-spacing: 0.08em; font-variant-numeric: tabular-nums; }
+    .project-item__info { display: flex; flex-direction: column; gap: var(--space-2); }
+    .project-item__name { font-family: var(--font-display); font-size: clamp(1.5rem, 2.5vw, 2.5rem); font-weight: 400; letter-spacing: -0.01em; transition: color var(--transition); }
+    .project-item:hover .project-item__name { color: var(--color-primary); }
+    .project-item__tags { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+    .project-item__tag { font-size: var(--text-xs); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-faint); }
+    .project-item__tag + .project-item__tag::before { content: '·'; margin-right: var(--space-2); }
+    .project-item__meta { display: flex; align-items: center; gap: var(--space-4); text-align: right; }
+    .project-item__badge {
+      font-size: var(--text-xs); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--color-primary); background: var(--color-primary-highlight);
+      padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);
+    }
+    .project-item__arrow {
+      width: 36px; height: 36px; border: 1px solid var(--color-border);
+      border-radius: var(--radius-full); display: flex; align-items: center;
+      justify-content: center; color: var(--color-text-muted); flex-shrink: 0;
+      transition: all var(--transition);
+    }
+    .project-item:hover .project-item__arrow {
+      background: var(--color-primary); border-color: var(--color-primary);
+      color: var(--color-text-inverse); transform: rotate(45deg);
+    }
+
+    /* ============================================================
+       SKILLS
+    ============================================================ */
+    .skills { padding-block: clamp(var(--space-16), 8vw, var(--space-24)); border-top: 1px solid var(--color-divider); }
+    .skills__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr)); gap: var(--space-4); margin-top: clamp(var(--space-10), 6vw, var(--space-16)); }
+    .skill-card {
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg); padding: var(--space-6);
+      transition: all var(--transition);
+    }
+    .skill-card:hover { border-color: oklch(from var(--color-primary) l c h / 0.35); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .skill-card__icon { width: 40px; height: 40px; margin-bottom: var(--space-5); color: var(--color-primary); }
+    .skill-card__title { font-size: var(--text-base); font-weight: 600; margin-bottom: var(--space-2); }
+    .skill-card__desc { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.6; }
+
+    /* ============================================================
+       EXPERIENCE
+    ============================================================ */
+    .experience { padding-block: clamp(var(--space-16), 8vw, var(--space-24)); border-top: 1px solid var(--color-divider); }
+    .timeline { margin-top: clamp(var(--space-10), 6vw, var(--space-16)); }
+    .timeline-item { display: grid; grid-template-columns: 200px 1fr; gap: var(--space-8); padding-block: var(--space-8); border-bottom: 1px solid var(--color-divider); }
+    .timeline-item:first-child { border-top: 1px solid var(--color-divider); }
+    .timeline-item__year { font-size: var(--text-sm); color: var(--color-text-muted); padding-top: var(--space-1); }
+    .timeline-item__role { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 400; letter-spacing: -0.01em; margin-bottom: var(--space-2); }
+    .timeline-item__org { font-size: var(--text-sm); font-weight: 500; color: var(--color-primary); margin-bottom: var(--space-3); letter-spacing: 0.02em; }
+    .timeline-item__desc { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.7; max-width: 60ch; }
+
+    /* ============================================================
+       CONTACT
+    ============================================================ */
+    .contact { padding-block: clamp(var(--space-20), 12vw, var(--space-32)); border-top: 1px solid var(--color-divider); text-align: center; }
+    .contact__eyebrow { font-size: var(--text-xs); font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-primary); margin-bottom: var(--space-6); }
+    .contact__heading { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: var(--space-8); }
+    .contact__heading em { font-style: italic; }
+    .contact__actions { display: flex; align-items: center; justify-content: center; gap: var(--space-4); flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: var(--space-3);
+      padding: var(--space-4) var(--space-8); background: var(--color-primary);
+      color: var(--color-text-inverse); font-size: var(--text-sm); font-weight: 600;
+      letter-spacing: 0.03em; border-radius: var(--radius-full);
+      box-shadow: 0 4px 16px oklch(from var(--color-primary) l c h / 0.25);
+      transition: all var(--transition);
+    }
+    .btn-primary:hover { background: var(--color-primary-hover); transform: translateY(-1px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: var(--space-3);
+      padding: var(--space-4) var(--space-8); border: 1px solid var(--color-border);
+      color: var(--color-text); font-size: var(--text-sm); font-weight: 500; border-radius: var(--radius-full);
+    }
+    .btn-outline:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer { padding-block: var(--space-8); border-top: 1px solid var(--color-divider); }
+    .footer__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); flex-wrap: wrap; }
+    .footer__copy { font-size: var(--text-xs); color: var(--color-text-faint); }
+    .footer__links { display: flex; gap: var(--space-6); }
+    .footer__link { font-size: var(--text-xs); color: var(--color-text-faint); }
+    .footer__link:hover { color: var(--color-text); }
+
+    /* ============================================================
+       ★  PAGE PROJET — DETAIL VIEW
+    ============================================================ */
+    #view-project {
+      padding-top: calc(var(--space-24) + var(--space-8));
+      padding-bottom: var(--space-24);
+      min-height: 100dvh;
+    }
+
+    /* Bouton retour */
+    .back-btn {
+      display: inline-flex; align-items: center; gap: var(--space-3);
+      font-size: var(--text-sm); font-weight: 500;
+      color: var(--color-text-muted); margin-bottom: clamp(var(--space-10), 6vw, var(--space-16));
+      padding: var(--space-2) 0; border-bottom: 1px solid transparent;
+    }
+    .back-btn:hover { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+    .back-btn svg { transition: transform var(--transition); }
+    .back-btn:hover svg { transform: translateX(-4px); }
+
+    /* En-tête du projet */
+    .proj-header { margin-bottom: clamp(var(--space-10), 6vw, var(--space-16)); }
+    .proj-eyebrow {
+      font-size: var(--text-xs); font-weight: 500; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--color-primary);
+      margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-3);
+    }
+    .proj-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--color-primary); }
+    .proj-title {
+      font-family: var(--font-display); font-size: var(--text-3xl);
+      font-weight: 400; line-height: 1.05; letter-spacing: -0.02em;
+      margin-bottom: var(--space-6);
+    }
+    .proj-title em { font-style: italic; }
+    .proj-meta {
+      display: flex; flex-wrap: wrap; gap: var(--space-3);
+      padding-bottom: var(--space-8); border-bottom: 1px solid var(--color-divider);
+    }
+    .proj-meta-pill {
+      font-size: var(--text-xs); font-weight: 500; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: var(--space-2) var(--space-4);
+      border: 1px solid var(--color-border); border-radius: var(--radius-full);
+      color: var(--color-text-muted);
+    }
+
+    /* Image hero du projet */
+    .proj-hero-img {
+      width: 100%; aspect-ratio: 16/7;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl); overflow: hidden;
+      margin-bottom: clamp(var(--space-10), 6vw, var(--space-16));
+      display: flex; align-items: center; justify-content: center;
+    }
+    .proj-hero-img svg { opacity: 0.15; width: 80px; height: 80px; color: var(--color-text); }
+
+    /* Corps du contenu */
+    .proj-body { display: grid; grid-template-columns: 1fr 300px; gap: clamp(var(--space-10), 6vw, var(--space-16)); align-items: start; }
+    .proj-content h2 { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 400; margin-bottom: var(--space-4); letter-spacing: -0.01em; }
+    .proj-content h3 { font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-3); margin-top: var(--space-8); }
+    .proj-content p { font-size: var(--text-base); line-height: 1.75; color: var(--color-text-muted); margin-bottom: var(--space-5); max-width: 68ch; }
+    .proj-content p strong { color: var(--color-text); font-weight: 600; }
+    .proj-content ul { margin-bottom: var(--space-6); display: flex; flex-direction: column; gap: var(--space-2); }
+    .proj-content ul li {
+      font-size: var(--text-base); line-height: 1.6; color: var(--color-text-muted);
+      padding-left: var(--space-5); position: relative;
+    }
+    .proj-content ul li::before {
+      content: ''; position: absolute; left: 0; top: 0.65em;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--color-primary);
+    }
+
+    /* Sidebar infos */
+    .proj-sidebar { position: sticky; top: calc(var(--space-24) + var(--space-4)); }
+    .proj-info-card {
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl); padding: var(--space-6);
+    }
+    .proj-info-card__title { font-size: var(--text-xs); font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-faint); margin-bottom: var(--space-5); }
+    .proj-info-row { display: flex; flex-direction: column; gap: var(--space-1); padding-block: var(--space-4); border-bottom: 1px solid var(--color-divider); }
+    .proj-info-row:last-child { border-bottom: none; }
+    .proj-info-row__label { font-size: var(--text-xs); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-faint); }
+    .proj-info-row__value { font-size: var(--text-sm); color: var(--color-text); font-weight: 500; }
+
+    /* Navigation entre projets */
+    .proj-nav { display: flex; justify-content: space-between; gap: var(--space-4); margin-top: clamp(var(--space-16), 8vw, var(--space-24)); padding-top: var(--space-8); border-top: 1px solid var(--color-divider); }
+    .proj-nav-link {
+      display: flex; flex-direction: column; gap: var(--space-2);
+      padding: var(--space-5) var(--space-6); flex: 1;
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg); transition: all var(--transition); max-width: 320px;
+    }
+    .proj-nav-link:hover { border-color: var(--color-primary); }
+    .proj-nav-link.next { text-align: right; margin-left: auto; }
+    .proj-nav-link__dir { font-size: var(--text-xs); font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-faint); }
+    .proj-nav-link__name { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 400; letter-spacing: -0.01em; }
+    .proj-nav-link:hover .proj-nav-link__name { color: var(--color-primary); }
+
+    /* ============================================================
+       SCROLL ANIMATION (CSS-only, no CLS)
+    ============================================================ */
+    .fade-in { opacity: 1; }
+    @supports (animation-timeline: scroll()) {
+      .fade-in {
+        opacity: 0;
+        animation: reveal-fade linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 75%;
+      }
+    }
+    @keyframes reveal-fade { to { opacity: 1; } }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 900px) {
+      .proj-body { grid-template-columns: 1fr; }
+      .proj-sidebar { position: static; }
+    }
+    @media (max-width: 768px) {
+      .nav__links { display: none; }
+      .about-strip__grid { grid-template-columns: 1fr; }
+      .project-item { grid-template-columns: 3ch 1fr; }
+      .project-item__meta { display: none; }
+      .timeline-item { grid-template-columns: 1fr; gap: var(--space-3); }
+      .footer__inner { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .hero__bottom { flex-direction: column; align-items: flex-start; }
+      .contact__actions { flex-direction: column; align-items: stretch; }
+      .contact__actions a { text-align: center; justify-content: center; }
+      .proj-nav { flex-direction: column; }
+      .proj-nav-link.next { margin-left: 0; text-align: left; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-dot"  id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ====================================================
+       NAV (partagée entre les deux vues)
+  ==================================================== -->
+  <nav class="nav" id="mainNav" aria-label="Navigation principale">
+    <div class="container">
+      <div class="nav__inner">
+        <a href="#home" class="nav__logo" aria-label="Accueil" id="navLogo">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <rect width="28" height="28" rx="6" fill="var(--color-primary)" opacity="0.15"/>
+            <path d="M8 8 L8 20 L14 20 C17.866 20 21 16.866 21 13 C21 10.239 18.761 8 16 8 Z"
+                  stroke="var(--color-primary)" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+            <circle cx="8" cy="14" r="1.5" fill="var(--color-primary)" stroke="none"/>
+          </svg>
+          <span>Gerryl Makwety</span>
+        </a>
+        <ul class="nav__links" role="list" id="navLinks">
+          <li><a href="#projets"    class="nav__link">Projets</a></li>
+          <li><a href="#competences" class="nav__link">Compétences</a></li>
+          <li><a href="#parcours"   class="nav__link">Parcours</a></li>
+          <li><a href="#contact"    class="nav__link">Contact</a></li>
+        </ul>
+        <div class="nav__actions">
+          <button class="theme-toggle" id="themeToggle" aria-label="Basculer le mode sombre">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ====================================================
+       VUE PRINCIPALE (portfolio)
+  ==================================================== -->
+  <div id="view-main">
+
+    <!-- HERO -->
+    <section class="hero" id="accueil">
+      <div class="hero__bg-text" aria-hidden="true">INGÉNIEUR</div>
+      <div class="container">
+        <p class="hero__greeting">Disponible · Tunis, Tunisie</p>
+        <h1 class="hero__name">
+          Bonjour,<br>
+          je suis <em>Giovanie</em><br>
+          MOUKALA MAKOUETY
+        </h1>
+        <div class="hero__bottom">
+          <p class="hero__description">
+            J'utilise ma <strong>passion pour l'ingénierie</strong> et mes compétences pour
+            concevoir des solutions industrielles. Passionné d'<strong>automatisation</strong>,
+            de <strong>robotique</strong> et de <strong>logistique</strong>.
+          </p>
+          <div class="hero__scroll" aria-hidden="true"><span>Défiler</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="about-strip" id="about">
+      <div class="container">
+        <div class="about-strip__grid fade-in">
+          <div>
+            <p class="about-strip__label">À propos</p>
+            <h2 class="about-strip__title">Étudiant Ingénieur<br>à <em>l'université centrale</em>, Tunis</h2>
+          </div>
+          <div>
+            <p class="about-strip__body">Originaire du <strong>Gabon</strong>, boursier ANBG en 1ère année d'ingénierie électromecanique à Tunis. Objectif : master en <strong>automatisation industrielle</strong> en France.</p>
+            <p class="about-strip__body">Curieux et rigoureux, je combine ingénierie et compétences transversales — <strong>logistique, débat, création de contenu</strong>.</p>
+            <div class="about-strip__tags">
+              <span class="tag">Automatisation</span>
+              <span class="tag">Robotique</span>
+              <span class="tag">Logistique</span>
+              <span class="tag">Mécanique des fluides</span>
+              <span class="tag">Metrologie</span>
+              <span class="tag">Debat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS LIST -->
+    <section class="projects" id="projets">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">Projets sélectionnés</h2>
+          <span class="section-count">04 projets</span>
+        </div>
+        <div class="projects__list">
+
+                    <a class="project-item fade-in" href="#projet-1" data-project="1" aria-label="Voir le projet Stage Komax Tunis">
+            <span class="project-item__num">01</span>
+            <div class="project-item__info">
+              <span class="project-item__name">Stage — Komax, Tunis</span>
+              <div class="project-item__tags">
+                <span class="project-item__tag">Logistique</span>
+                <span class="project-item__tag">Mécanique industrielle</span>
+                <span class="project-item__tag">Tunis, Tunisie</span>
+              </div>
+            </div>
+            <div class="project-item__meta">
+              <span class="project-item__badge">Stage</span>
+              <span class="project-item__arrow" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <a class="project-item fade-in" href="#projet-2" data-project="2" aria-label="Voir le projet Stage SUN7 Industrie">
+            <span class="project-item__num">02</span>
+            <div class="project-item__info">
+              <span class="project-item__name">Stage — SUN7 Industrie, Gabon</span>
+              <div class="project-item__tags">
+                <span class="project-item__tag">Génie civil</span>
+                <span class="project-item__tag">Maintenance industrielle</span>
+                <span class="project-item__tag">Port Gentil, Gabon </span>
+              </div>
+            </div>
+            <div class="project-item__meta">
+              <span class="project-item__badge">Stage</span>
+              <span class="project-item__arrow" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <a class="project-item fade-in" href="#projet-3" data-project="3" aria-label="Voir le projet Réhabilitation scie mécanique">
+            <span class="project-item__num">03</span>
+            <div class="project-item__info">
+              <span class="project-item__name">Réhabilitation d'une Scie Industrielle</span>
+              <div class="project-item__tags">
+                <span class="project-item__tag">Mécanique</span>
+                <span class="project-item__tag">Maintenance corrective</span>
+                <span class="project-item__tag">Travail d'équipe</span>
+              </div>
+            </div>
+            <div class="project-item__meta">
+              <span class="project-item__badge">Académique</span>
+              <span class="project-item__arrow" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              </span>
+            </div>
+          </a>
+
+          <a class="project-item fade-in" href="#projet-4" data-project="4" aria-label="Voir le projet Création de contenu">
+            <span class="project-item__num">04</span>
+            <div class="project-item__info">
+              <span class="project-item__name">Création de Contenu Numérique</span>
+              <div class="project-item__tags">
+                <span class="project-item__tag">TikTok</span>
+                <span class="project-item__tag">YouTube</span>
+                <span class="project-item__tag">Production vidéo</span>
+              </div>
+            </div>
+            <div class="project-item__meta">
+              <span class="project-item__badge">Personnel</span>
+              <span class="project-item__arrow" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              </span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="skills" id="competences">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">Compétences</h2>
+          <span class="section-count">Techniques & Transversales</span>
+        </div>
+        <div class="skills__grid">
+          <div class="skill-card fade-in">
+            <div class="skill-card__icon">
+              <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="16" width="28" height="18" rx="2"/><path d="M12 16V10a8 8 0 0 1 16 0v6"/><circle cx="20" cy="25" r="2.5" fill="currentColor" stroke="none"/><path d="M20 27.5V31"/></svg>
+            </div>
+            <h3 class="skill-card__title">Automatisation & Robotique</h3>
+            <p class="skill-card__desc">Automates programmables (PLC), systèmes embarqués, vision industrielle, capteurs & actionneurs.</p>
+          </div>
+          <div class="skill-card fade-in">
+            <div class="skill-card__icon">
+              <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 30 L14 18 L22 24 L30 10 L38 16"/><circle cx="14" cy="18" r="2" fill="currentColor" stroke="none"/><circle cx="22" cy="24" r="2" fill="currentColor" stroke="none"/><circle cx="30" cy="10" r="2" fill="currentColor" stroke="none"/></svg>
+            </div>
+            <h3 class="skill-card__title">Logistique & Supply Chain</h3>
+            <p class="skill-card__desc">Gestion de flux, optimisation de chaînes d'approvisionnement, pré-assemblage, logistique industrielle.</p>
+          </div>
+          <div class="skill-card fade-in">
+            <div class="skill-card__icon">
+              <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="20" cy="20" r="12"/><path d="M20 8 C14 8 8 14 8 20"/><path d="M8 20 C8 26 14 32 20 32"/><path d="M20 8 C26 8 32 14 32 20"/><path d="M32 20 C32 26 26 32 20 32"/><line x1="8" y1="20" x2="32" y2="20"/><line x1="20" y1="8" x2="20" y2="32"/></svg>
+            </div>
+            <h3 class="skill-card__title">Communication</h3>
+            <p class="skill-card__desc">Français (natif), Anglais technique, rédaction professionnelle, débat et argumentation.</p>
+          </div>
+          <div class="skill-card fade-in">
+            <div class="skill-card__icon">
+              <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="6" y="8" width="28" height="20" rx="2"/><path d="M14 32 H26"/><path d="M20 28 V32"/><path d="M12 18 L16 14 L20 18 L26 12"/></svg>
+            </div>
+            <h3 class="skill-card__title">Outils Informatiques</h3>
+            <p class="skill-card__desc">Microsoft Office, suite Adobe, outils IA, gestion de projets numériques.</p>
+          </div>
+          <div class="skill-card fade-in">
+            <div class="skill-card__icon">
+              <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 6 L8 13 V27 L20 34 L32 27 V13 Z"/><path d="M20 6 V34" stroke-dasharray="3 3"/><path d="M8 13 L32 27"/><path d="M32 13 L8 27"/></svg>
+            </div>
+            <h3 class="skill-card__title">Ingénierie Environnementale</h3>
+            <p class="skill-card__desc">Développement durable, gestion des ressources, solutions éco-industrielles pour l'Afrique.</p>
+          </div>
+          <div class="skill-card fade-in">
+            <div class="skill-card__icon">
+              <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="20" cy="14" r="6"/><path d="M20 22 C13 22 8 26 8 32"/><path d="M20 22 C27 22 32 26 32 32"/><path d="M26 28 L30 32 L34 24"/></svg>
+            </div>
+            <h3 class="skill-card__title">Leadership</h3>
+            <p class="skill-card__desc">Gestion d'équipe, initiative, adaptabilité interculturelle, création de contenu.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="experience" id="parcours">
+      <div class="container">
+        <div class="section-header fade-in">
+          <h2 class="section-title">Parcours</h2>
+          <span class="section-count">Formation & Expériences</span>
+        </div>
+        <div class="timeline">
+          <div class="timeline-item fade-in">
+            <div class="timeline-item__year">2025 — En cours</div>
+            <div class="timeline-item__content">
+              <h3 class="timeline-item__role">Étudiant Ingénieur — 1ère Année électromecanique</h3>
+              <p class="timeline-item__org">Université centrale, Tunis · Bourse ANBG</p>
+              <p class="timeline-item__desc">Formation en ingénierie électromecanique avec spécialisation progressive en automatisation. Objectif : master en France.</p>
+            </div>
+          </div>
+          <div class="timeline-item fade-in">
+            <div class="timeline-item__year">2026 — Février</div>
+            <div class="timeline-item__content">
+              <h3 class="timeline-item__role">Stagiaire — Logistique & Pré-assemblage</h3>
+              <p class="timeline-item__org">Komax, Tunis · Tunisie</p>
+              <p class="timeline-item__desc">Immersion dans les secteurs logistique et pré-assemblage. Participation à l'optimisation des flux de matériaux.</p>
+            </div>
+          </div>
+          <div class="timeline-item fade-in">
+            <div class="timeline-item__year">2023</div>
+            <div class="timeline-item__content">
+              <h3 class="timeline-item__role">Baccalauréat Scientifique et technologique</h3>
+              <p class="timeline-item__org">Lycée technique Jean Fidèle OTANDO, Gabon 🇬🇦</p>
+              <p class="timeline-item__desc">Obtention du baccalauréat scientifique et technologique avec mention, ouvrant la voie à la formation d'ingénieur en Tunisie.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="contact" id="contact">
+      <div class="container">
+        <p class="contact__eyebrow fade-in">Travaillons ensemble</p>
+        <h2 class="contact__heading fade-in">Mes contacts<br> <em>Je reponds géneralement sous 24h</em> !</h2>
+        <div class="contact__actions fade-in">
+          <a href="mailto:Gerrylmakwety@email.com" class="btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+            Écrire un e-mail
+          </a>
+          <a href="https://linkedin.com/in/giovanie-gerryl-moukala-makouety-90a3602b3" target="_blank" rel="noopener noreferrer" class="btn-outline">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__inner">
+          <p class="footer__copy">© 2025 MOUKALA MAKOUETY · Étudiant Ingénieur · Tunis</p>
+          <nav class="footer__links" aria-label="Pied de page">
+            <a href="#accueil" class="footer__link">Accueil</a>
+            <a href="#projets" class="footer__link">Projets</a>
+            <a href="#contact" class="footer__link">Contact</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /view-main -->
+
+
+  <!-- ====================================================
+       VUE PROJET (page détail)
+       Le contenu est injecté dynamiquement par le router
+  ==================================================== -->
+  <div id="view-project" aria-live="polite">
+    <div class="container">
+
+      <a href="#projets" class="back-btn" id="backBtn" aria-label="Retour aux projets">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Retour aux projets
+      </a>
+
+      <div id="projDetailContent">
+        <!-- Injecté par le router -->
+      </div>
+
+    </div>
+  </div><!-- /view-project -->
+
+
+  <!-- ====================================================
+       JAVASCRIPT — Router hash-based + animations
+  ==================================================== -->
+  <script>
+  /* ================================================================
+     DONNÉES DES PROJETS
+     Modifie chaque objet pour ajouter ton vrai contenu.
+  ================================================================ */
+  const PROJECTS = {
+    "projet-1": {
+      id: "projet-1",
+      num: "01",
+      badge: "Stage",
+      category: "Logistique · Mécanique industrielle",
+      title: "Stage — <em>Komax</em>, Tunis",
+      year: "2026",
+      duration: "Février — début Mars 2026",
+      tools: "Gestion logistique, outils mécaniques, rapports terrain",
+      status: "Terminé",
+      image: "Gemini_Generated_Image_kzbkbhkzbkbhkzbk.png",
+      prev: null,
+      next: { id: "projet-2", name: "Stage — SUN7 Industrie, Gabon" },
+      body: `
+        <h2>Contexte du stage</h2>
+        <p>Stage effectué au sein de <strong>Komax</strong>, entreprise spécialisée dans les solutions d'assemblage et de traitement de câbles, implantée à Tunis. J'ai intégré les services <strong>Logistique et Mécanique</strong> durant cette période de février à début mars 2026.</p>
+
+        <h3>Présentation de l'entreprise</h3>
+        <p>Komax est un acteur mondial de référence dans l'industrie de la <strong>fabrication de faisceaux de câbles</strong>. Son site tunisien s'inscrit dans une chaîne industrielle internationale exigeante, avec des standards de qualité et de traçabilité élevés.</p>
+
+        <h3>Missions réalisées</h3>
+        <ul>
+          <li>Observation et participation aux opérations logistiques internes (réception, stockage, distribution des composants)</li>
+          <li>Appui dans la gestion des flux de matériaux entre les ateliers de production</li>
+          <li>Intervention dans le service mécanique pour le suivi et l'entretien des équipements de production</li>
+          <li>Prise en main des procédures qualité et des outils de traçabilité en vigueur</li>
+          <li>Rédaction de comptes rendus d'activité et participation aux réunions d'équipe</li>
+        </ul>
+
+        <h3>Ce que j'ai appris</h3>
+        <p>Ce stage m'a offert une <strong>première immersion dans un environnement industriel international</strong>, me permettant de comprendre les interactions entre les services logistique et mécanique dans un contexte de production à cadence soutenue. J'ai renforcé mon sens de l'organisation, ma rigueur technique et ma capacité à m'adapter rapidement à un milieu professionnel exigeant.</p>
+      `
+    },
+    "projet-2": {
+      id: "projet-2",
+      num: "02",
+      badge: "Stage",
+      category: "Génie civil · Maintenance industrielle",
+      title: "Stage — <em>SUN7 Industrie</em>, Port Gentil",
+      year: "2025",
+      duration: "Juin — Septembre 2025",
+      tools: "Équipements de génie civil, outils de maintenance, normes de sécurité industrielle",
+      status: "Terminé",
+      image: "worksite-2458150_1280.jpg",
+      prev: { id: "projet-1", name: "Stage — Komax, Tunis" },
+      next: { id: "projet-3", name: "Réhabilitation d'une scie mécanique industrielle" },
+      body: `
+        <h2>Contexte du stage</h2>
+        <p>Stage de quatre mois réalisé au sein de <strong>SUN7 Industrie</strong>, entreprise gabonaise basée à Port Gentil, spécialisée dans les domaines de l'<strong>ingénierie, de la maintenance industrielle et du génie civil</strong>. Ce stage constitue ma première expérience professionnelle terrain en Afrique.</p>
+
+        <h3>Présentation de l'entreprise</h3>
+        <p>SUN7 Industrie intervient sur des chantiers industriels et d'infrastructure à Port Gentil, capitale économique du Gabon et plaque tournante du secteur pétrolier et portuaire. L'entreprise offre des prestations intégrées allant de la <strong>construction à la maintenance corrective et préventive</strong> d'équipements industriels.</p>
+
+        <h3>Missions réalisées</h3>
+        <ul>
+          <li><strong>Rénovation en génie civil</strong> : participation aux travaux de réhabilitation de structures existantes sur des sites industriels</li>
+          <li><strong>Remplacement et installation de gardes corps et rambardes</strong> : dépose des équipements vétustes, mesures, découpe, pose et fixation de nouveaux éléments conformes aux normes en vigueur</li>
+          <li><strong>Mise en normes des installations</strong> : vérification et mise en conformité de dispositifs de sécurité selon les référentiels applicables sur les sites industriels</li>
+          <li>Appui logistique sur chantier : gestion du matériel, préparation des zones d'intervention</li>
+          <li>Rédaction de fiches d'intervention et participation aux réunions de sécurité chantier</li>
+        </ul>
+
+        <h3>Ce que j'ai appris</h3>
+        <p>Ce stage m'a permis de découvrir concrètement les <strong>réalités du terrain industriel gabonais</strong> et de développer des compétences pratiques en génie civil appliqué. J'ai appris à respecter des <strong>protocoles de sécurité stricts</strong>, à travailler en équipe dans des conditions exigeantes et à m'adapter aux contraintes d'un chantier en milieu industriel. Une expérience fondatrice qui a confirmé mon goût pour les métiers de l'ingénierie de terrain.</p>
+      `
+    },
+    "projet-3": {
+      id: "projet-3",
+      num: "03",
+      badge: "Académique",
+      category: "Mécanique · Maintenance corrective",
+      title: "Réhabilitation d'une <em>Scie Mécanique</em> Industrielle",
+      year: "2023",
+      duration: "3 mois — Équipe de 4 étudiants",
+      tools: "Analyse fonctionnelle, diagnostic de pannes, outils de maintenance corrective",
+      status: "Terminé",
+      image: "WWXQ5828.JPG",
+      prev: { id: "projet-2", name: "Stage — SUN7 Industrie, Gabon" },
+      next: { id: "projet-4", name: "Création de Contenu Numérique" },
+      body: `
+        <h2>Présentation du projet</h2>
+        <p>Dans le cadre de l'année scolaire 2023, j'ai participé à un <strong>projet technique de réhabilitation d'une scie mécanique industrielle</strong>, mené en équipe de quatre étudiants sur une durée de trois mois. Ce projet collectif constituait un exercice grandeur nature de résolution de problèmes en contexte industriel réel.</p>
+
+        <h3>Objectif</h3>
+        <p>L'objectif principal était de <strong>diagnostiquer les dysfonctionnements de la machine</strong>, puis de proposer et mettre en œuvre des solutions adaptées afin de <strong>restaurer son bon fonctionnement</strong>. Chaque étape — du diagnostic à la validation — devait être documentée et justifiée techniquement.</p>
+
+        <h3>Méthodes et outils mobilisés</h3>
+        <ul>
+          <li><strong>Analyse fonctionnelle</strong> : identification des fonctions principales et de contrainte de la machine, rédaction d'un cahier des charges technique</li>
+          <li><strong>Diagnostic des pannes</strong> : inspection visuelle, relevés de mesures, arbre des causes pour identifier les défaillances à l'origine des dysfonctionnements</li>
+          <li><strong>Étude des composants mécaniques</strong> : analyse des pièces défectueuses (jeux mécaniques, usures, ruptures de fatigue), sélection des pièces de remplacement</li>
+          <li><strong>Maintenance corrective</strong> : intervention sur la machine, remplacement des composants défectueux, réglages et tests de remise en service</li>
+        </ul>
+
+        <h3>Résultats & compétences développées</h3>
+        <p>À l'issue du projet, la scie a été <strong>remise en état de fonctionnement</strong> et les résultats présentés devant un jury enseignant. Ce travail nous a permis de développer des compétences solides en <strong>résolution de problèmes techniques</strong>, en travail collaboratif ainsi qu'en gestion de projet dans un contexte industriel. Il a été pour moi une introduction concrète à la démarche d'ingénieur : observer, analyser, décider et agir.</p>
+      `
+    },
+    "projet-4": {
+      id: "projet-4",
+      num: "04",
+      badge: "Personnel",
+      category: "Création de contenu · Vidéo",
+      title: "Création de <em>Contenu Numérique</em>",
+      year: "2024 — En cours",
+      duration: "Continu",
+      tools: "CapCut, Adobe Premiere, Canva, TikTok, YouTube",
+      status: "Actif",
+      image: "photo_2026-04-07_19-53-11.jpg",
+      prev: { id: "projet-3", name: "Réhabilitation d'une scie mécanique industrielle" },
+      next: null,
+      body: `
+        <h2>À propos de ce projet</h2>
+        <p>En parallèle de mes études, je développe une activité de <strong>création de contenu numérique</strong> sur TikTok et YouTube. Ce projet personnel me permet d'exprimer ma créativité, de développer des compétences en communication digitale et de construire une audience.</p>
+
+        <h3>Types de contenus</h3>
+        <ul>
+          <li>Vlogs et contenus sur la vie d'étudiant ingénieur en Afrique et en Tunisie</li>
+          <li>Partage d'expériences sur les bourses et la mobilité internationale</li>
+          <li>Contenus éducatifs et motivationnels pour les lycéens gabonais</li>
+          <li>Capsules vidéo sur l'ingénierie et la technologie</li>
+        </ul>
+
+        <h3>Compétences développées</h3>
+        <p>La création de contenu m'a appris à <strong>structurer un message, captiver une audience</strong> et maîtriser les outils de production vidéo (cadrage, montage, habillage graphique). C'est aussi un excellent terrain d'entraînement pour la <strong>prise de parole en public</strong> et la rhétorique.</p>
+
+        <h3>Vision</h3>
+        <p>À terme, je souhaite utiliser ce canal pour <strong>documenter mon parcours d'ingénieur</strong>, inspirer d'autres jeunes Gabonais à s'orienter vers les métiers techniques et créer une communauté autour de la technologie et du développement en Afrique.</p>
+      `
+    }
+  };
+
+  const projectOrder = ["projet-1", "projet-2", "projet-3", "projet-4"];
+
+
+  /* ================================================================
+     RENDU DE LA PAGE PROJET
+  ================================================================ */
+  function renderProjectPage(id) {
+    const p = PROJECTS[id];
+    if (!p) return false;
+
+    const prevHTML = p.prev
+      ? `<a href="#${p.prev.id}" class="proj-nav-link prev" data-project-nav>
+           <span class="proj-nav-link__dir">← Précédent</span>
+           <span class="proj-nav-link__name">${p.prev.name}</span>
+         </a>` : `<div></div>`;
+
+    const nextHTML = p.next
+      ? `<a href="#${p.next.id}" class="proj-nav-link next" data-project-nav>
+           <span class="proj-nav-link__dir">Suivant →</span>
+           <span class="proj-nav-link__name">${p.next.name}</span>
+         </a>` : `<div></div>`;
+
+    document.getElementById("projDetailContent").innerHTML = `
+      <header class="proj-header">
+        <p class="proj-eyebrow">${p.badge} · ${p.category}</p>
+        <h1 class="proj-title">${p.title}</h1>
+        <div class="proj-meta">
+          <span class="proj-meta-pill">${p.year}</span>
+          <span class="proj-meta-pill">${p.duration}</span>
+          <span class="proj-meta-pill">${p.status}</span>
+        </div>
+      </header>
+      <div class="proj-hero-img">
+  ${p.image
+    ? `<img src="${p.image}" alt="Photo du projet" style="width:100%;height:100%;object-fit:cover;" />`
+    : `<svg aria-hidden="true" viewBox="0 0 80 80" fill="none" stroke="currentColor" stroke-width="1.5" style="opacity:.15;width:80px;height:80px;"><rect x="8" y="8" width="64" height="64" rx="8"/><path d="M24 40 L36 28 L48 40 L60 24"/></svg>`
+  }
+      </div>
+
+      <div class="proj-body">
+        <div class="proj-content">${p.body}</div>
+        <aside class="proj-sidebar">
+          <div class="proj-info-card">
+            <p class="proj-info-card__title">Informations</p>
+            <div class="proj-info-row">
+              <span class="proj-info-row__label">Année</span>
+              <span class="proj-info-row__value">${p.year}</span>
+            </div>
+            <div class="proj-info-row">
+              <span class="proj-info-row__label">Durée</span>
+              <span class="proj-info-row__value">${p.duration}</span>
+            </div>
+            <div class="proj-info-row">
+              <span class="proj-info-row__label">Outils</span>
+              <span class="proj-info-row__value">${p.tools}</span>
+            </div>
+            <div class="proj-info-row">
+              <span class="proj-info-row__label">Statut</span>
+              <span class="proj-info-row__value">${p.status}</span>
+            </div>
+            <div class="proj-info-row">
+              <span class="proj-info-row__label">Catégorie</span>
+              <span class="proj-info-row__value">${p.badge}</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <nav class="proj-nav" aria-label="Navigation entre projets">
+        ${prevHTML}
+        ${nextHTML}
+      </nav>
+    `;
+    return true;
+  }
+
+
+  /* ================================================================
+     ROUTER — basé sur window.location.hash
+     Principe : le hash (#projet-1, #projet-2…) indique quelle
+     vue afficher. hashchange est écouté pour les transitions.
+  ================================================================ */
+  const viewMain    = document.getElementById("view-main");
+  const viewProject = document.getElementById("view-project");
+
+  function showMain(animate) {
+    document.title = "[Votre Nom] — Ingénieur en devenir";
+    if (animate) {
+      viewProject.classList.add("exiting");
+      setTimeout(() => {
+        viewProject.style.display = "none";
+        viewProject.classList.remove("exiting");
+        viewMain.style.display = "block";
+        viewMain.classList.add("entering");
+        setTimeout(() => viewMain.classList.remove("entering"), 500);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 280);
+    } else {
+      viewProject.style.display = "none";
+      viewMain.style.display    = "block";
+    }
+  }
+
+  function showProject(id, animate) {
+    const p = PROJECTS[id];
+    if (!p) { showMain(false); return; }
+
+    document.title = `${id.replace("-", " ").replace(/\b\w/g,c=>c.toUpperCase())} — [Votre Nom]`;
+    renderProjectPage(id);
+
+    if (animate) {
+      viewMain.classList.add("exiting");
+      setTimeout(() => {
+        viewMain.style.display = "none";
+        viewMain.classList.remove("exiting");
+        viewProject.style.display = "block";
+        viewProject.classList.add("entering");
+        setTimeout(() => viewProject.classList.remove("entering"), 500);
+        window.scrollTo({ top: 0, behavior: "instant" });
+      }, 280);
+    } else {
+      viewMain.style.display    = "none";
+      viewProject.style.display = "block";
+      window.scrollTo({ top: 0, behavior: "instant" });
+    }
+  }
+
+  function handleRoute(animate) {
+    const hash = window.location.hash.replace("#", "");
+    const isProject = hash.startsWith("projet-");
+    const isMainAnchor = ["accueil", "about", "projets", "competences", "parcours", "contact", "home", ""].includes(hash);
+
+    if (isProject) {
+      showProject(hash, animate);
+    } else {
+      showMain(animate);
+      // scroll vers l'ancre si applicable
+      if (hash && !isProject) {
+        setTimeout(() => {
+          const el = document.getElementById(hash);
+          if (el) el.scrollIntoView({ behavior: "smooth" });
+        }, animate ? 400 : 0);
+      }
+    }
+  }
+
+  // Premier chargement
+  handleRoute(false);
+
+  // Navigation avant/arrière (bouton retour du navigateur)
+  window.addEventListener("hashchange", () => handleRoute(true));
+
+  // Intercepte les clics sur les liens projet dans la liste
+  document.addEventListener("click", e => {
+    const link = e.target.closest("[data-project]");
+    if (link) {
+      e.preventDefault();
+      const id = "projet-" + link.dataset.project;
+      window.location.hash = id;
+    }
+
+    // Liens de navigation entre projets (prev/next)
+    const navLink = e.target.closest("[data-project-nav]");
+    if (navLink) {
+      e.preventDefault();
+      const href = navLink.getAttribute("href");
+      window.location.hash = href.replace("#", "");
+    }
+
+    // Lien retour
+    const backBtn = e.target.closest("#backBtn");
+    if (backBtn) {
+      e.preventDefault();
+      window.location.hash = "projets";
+    }
+
+    // Liens nav internes (#projets etc.) quand on est sur une page projet
+    const navLink2 = e.target.closest(".nav__link, .footer__link, .nav__logo");
+    if (navLink2 && viewProject.style.display === "block") {
+      // laisser le router gérer
+    }
+  });
+
+
+  /* ================================================================
+     THEME TOGGLE
+  ================================================================ */
+  (function () {
+    const btn  = document.getElementById("themeToggle");
+    const html = document.documentElement;
+    let cur = "dark";
+    html.setAttribute("data-theme", cur);
+    const moon = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    const sun  = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+    btn.innerHTML = moon;
+    btn.addEventListener("click", () => {
+      cur = cur === "dark" ? "light" : "dark";
+      html.setAttribute("data-theme", cur);
+      btn.innerHTML = cur === "dark" ? moon : sun;
+    });
+  })();
+
+
+  /* ================================================================
+     NAV SCROLL
+  ================================================================ */
+  const mainNav = document.getElementById("mainNav");
+  window.addEventListener("scroll", () => {
+    mainNav.classList.toggle("scrolled", window.scrollY > 60);
+  }, { passive: true });
+
+
+  /* ================================================================
+     CURSEUR PERSONNALISÉ
+  ================================================================ */
+  (function () {
+    const dot  = document.getElementById("cursorDot");
+    const ring = document.getElementById("cursorRing");
+    if (!dot || !ring || window.matchMedia("(pointer: coarse)").matches) return;
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener("mousemove", e => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx+"px"; dot.style.top = my+"px";
+    }, { passive: true });
+    function lerp(a,b,t){ return a+(b-a)*t; }
+    (function tick(){
+      rx=lerp(rx,mx,0.12); ry=lerp(ry,my,0.12);
+      ring.style.left=rx+"px"; ring.style.top=ry+"px";
+      requestAnimationFrame(tick);
+    })();
+    document.querySelectorAll("a,button,[role='button']").forEach(el=>{
+      el.addEventListener("mouseenter",()=>{ ring.style.width="50px"; ring.style.height="50px"; ring.style.borderColor="var(--color-primary)"; });
+      el.addEventListener("mouseleave",()=>{ ring.style.width="32px"; ring.style.height="32px"; ring.style.borderColor=""; });
+    });
+  })();
+
+
+  /* ================================================================
+     GSAP — animations hero au chargement
+  ================================================================ */
+  window.addEventListener("load", () => {
+    if (typeof gsap === "undefined") return;
+    gsap.registerPlugin(ScrollTrigger);
+    if (window.location.hash.startsWith("#projet-")) return; // pas d'animation hero si on arrive sur un projet
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    tl.to(".hero__greeting",    { opacity: 1, duration: 0.7, delay: 0.3 })
+      .to(".hero__name",        { opacity: 1, duration: 0.9, ease: "power4.out" }, "-=0.3")
+      .to(".hero__description", { opacity: 1, duration: 0.7 }, "-=0.4")
+      .to(".hero__scroll",      { opacity: 1, duration: 0.5 }, "-=0.2");
+
+    gsap.utils.toArray(".project-item").forEach((el, i) => {
+      gsap.fromTo(el, { opacity:0, x:-20 }, {
+        opacity:1, x:0, duration:0.6, delay: i*0.08,
+        scrollTrigger: { trigger: el, start: "top 88%", once: true }
+      });
+    });
+    gsap.utils.toArray(".skill-card").forEach((el, i) => {
+      gsap.fromTo(el, { opacity:0, y:20 }, {
+        opacity:1, y:0, duration:0.5, delay: i*0.07,
+        scrollTrigger: { trigger: el, start: "top 90%", once: true }
+      });
+    });
+  });
+  </script>
+
+</body>
+</html>
